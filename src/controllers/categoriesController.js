@@ -3,7 +3,7 @@ const { Categorie } = require('../models');
 const errorConstructor = require('../utils/functions/errorHandling');
 
 const {
-  success, badRequest, conflict, created, notFound,
+  badRequest, created, success,
 } = require('../utils/dictionary/statusCode');
 
 const schemaCategorie = Joi.object({
@@ -22,6 +22,18 @@ const createCategories = async (req, res, next) => {
   }
 };
 
+const getAllCategories = async (req, res, next) => {
+  try {
+    const categories = await Categorie.findAll();
+    console.log(categories);
+    return res.status(success).json(categories);
+  } catch (error) {
+    console.log(`POST getAllCategories -> ${error.message}`);
+    next(error);
+  }
+};
+
 module.exports = {
   createCategories,
+  getAllCategories,
 };
