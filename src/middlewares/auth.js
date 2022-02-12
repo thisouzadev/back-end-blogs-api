@@ -5,15 +5,15 @@ const SECRET = process.env.JWT_SECRET;
 
 const createToken = (payload) => jwt.sign(payload, SECRET);
 
-const validateToken = (token) => jwt.verify(token, SECRET);
+const validate = (token) => jwt.verify(token, SECRET);
 
-module.exports = (req, res, next) => {
+const validateToken = (req, res, next) => {
   try {
     const { authorization } = req.headers;
     
     if (!authorization) return res.status(401).json({ message: 'Token not found' });
     
-    const Payload = validateToken(authorization);
+    const Payload = validate(authorization);
 
     req.userId = Payload.payload.id;
     console.log(req.userId);

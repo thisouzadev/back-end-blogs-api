@@ -61,7 +61,21 @@ const login = async (req, res, next) => {
     next(error);
   }
 };
+
+const getAllUsers = async (req, res, next) => {
+  try {
+    const users = await User.findAll();
+    console.log(users);
+    delete users.password;
+    return res.status(success).json(users);
+  } catch (error) {
+    console.log(`POST getAllUsers -> ${error.message}`);
+    next(error);
+  }
+};
+
 module.exports = {
   createUser,
   login,
+  getAllUsers,
 };
