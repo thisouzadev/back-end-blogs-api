@@ -16,7 +16,6 @@ const validateToken = (req, res, next) => {
     const Payload = validate(authorization);
 
     req.userId = Payload.payload.id;
-    console.log(req.userId);
     next();
   } catch (error) {
     res.status(401).json({ message: 'Expired or invalid token' });

@@ -6,7 +6,7 @@ const { createToken } = require('../middlewares/auth');
 const errorConstructor = require('../utils/functions/errorHandling');
 
 const {
-  success, badRequest, conflict, created,
+  success, badRequest, conflict, created, notFound,
 } = require('../utils/dictionary/statusCode');
 
 const schemaUser = Joi.object({
@@ -74,8 +74,22 @@ const getAllUsers = async (req, res, next) => {
   }
 };
 
+const getUserById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const users = await User.findByPk(id);
+    if (!users) throw errorConstructor(notFound, 'User does not exist');
+    delete users.password;
+    return res.status(success).json(users);
+  } catch (error) {
+    console.log(`POST getAllUsers -> ${error.message}`);
+    next(error);
+  }
+};
+
 module.exports = {
   createUser,
   login,
   getAllUsers,
+  getUserById,
 };
