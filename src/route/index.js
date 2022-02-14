@@ -15,4 +15,5 @@ router.post('/categories', validateToken, categoriesController.createCategories)
 router.get('/categories', validateToken, categoriesController.getAllCategories);
 
 router.post('/post', validateToken, blogPostsController.createBlogPost);
+router.get('/post', validateToken, blogPostsController.findAllBlogPost);
 module.exports = router;
