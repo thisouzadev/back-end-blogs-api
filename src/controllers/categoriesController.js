@@ -14,7 +14,9 @@ const createCategories = async (req, res, next) => {
     const { name } = req.body;
     const { error } = schemaCategorie.validate(req.body);
     if (error) throw errorConstructor(badRequest, error.message);
+
     const createCategory = await Categorie.create({ name });
+
     return res.status(created).json(createCategory);
   } catch (error) {
     console.log(`POST CREATECATEGORIE -> ${error.message}`);
@@ -25,10 +27,10 @@ const createCategories = async (req, res, next) => {
 const getAllCategories = async (req, res, next) => {
   try {
     const categories = await Categorie.findAll();
-    console.log(categories);
+
     return res.status(success).json(categories);
   } catch (error) {
-    console.log(`POST getAllCategories -> ${error.message}`);
+    console.log(`GET GETALLCATEGORIE -> ${error.message}`);
     next(error);
   }
 };

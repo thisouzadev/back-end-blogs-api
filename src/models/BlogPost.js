@@ -7,37 +7,36 @@ const Attributes = {
     autoIncrement: true,
     primaryKey: true,
   },
-  displayName: {
+  title: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  email: {
+  content: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  password: {
+  userId: {
     type: DataTypes.STRING,
     allowNull: false,
-  },
-  image: {
-    type: DataTypes.STRING,
-    allowNull: false,
+    foreignKey: true,
   },
 };
 
 module.exports = (sequelize) => {
-  const User = sequelize.define(
-    'User',
+  const BlogPost = sequelize.define(
+    'BlogPost',
     Attributes,
     {
-      timestamps: false,
-      tableName: 'Users',
+      timestamps: true,
+      createdAt: 'published',
+      updatedAt: 'updated',
+      tableName: 'BlogPosts',
     },
   );
 
-  User.associate = (models) => {
-    User.hasMany(models.BlogPost, { foreignKey: 'userId', as: 'BlogPosts' });
+  BlogPost.associate = (models) => {
+    BlogPost.belongsTo(models.User, { foreignKey: 'userId', as: 'Users' });
   };
 
-  return User;
+  return BlogPost;
 };

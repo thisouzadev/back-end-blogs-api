@@ -48,7 +48,7 @@ const login = async (req, res, next) => {
     if (error) throw errorConstructor(badRequest, error.message);
 
     const searchingUser = await User.findOne({ where: { email }, raw: true });
-    console.log(searchingUser, 'login searching');
+
     if (!searchingUser || searchingUser.password !== password) {
       throw errorConstructor(badRequest, 'Invalid fields');
     }
@@ -65,11 +65,11 @@ const login = async (req, res, next) => {
 const getAllUsers = async (req, res, next) => {
   try {
     const users = await User.findAll();
-    console.log(users);
+
     delete users.password;
     return res.status(success).json(users);
   } catch (error) {
-    console.log(`POST getAllUsers -> ${error.message}`);
+    console.log(`GET GETALLUSERS -> ${error.message}`);
     next(error);
   }
 };
@@ -82,7 +82,7 @@ const getUserById = async (req, res, next) => {
     delete users.password;
     return res.status(success).json(users);
   } catch (error) {
-    console.log(`POST getAllUsers -> ${error.message}`);
+    console.log(`GET GETUSERBYID -> ${error.message}`);
     next(error);
   }
 };
