@@ -39,8 +39,8 @@ const findAllBlogPost = async (req, res, next) => {
   try {
     const allPosts = await BlogPost.findAll({
       include: [
-        { model: User, as: 'Users', attributes: { exclude: ['password'] } },
-        { model: Categorie, as: 'Categories', through: { attributes: [] } },
+        { model: User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: Categorie, as: 'categories', through: { attributes: [] } },
       ],
     });
     delete allPosts.PostsCategories;
